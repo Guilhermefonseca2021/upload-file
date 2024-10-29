@@ -12,13 +12,54 @@
       <!--Create a form to send the file to a route  "upload"-->
       <!--Set the request method to POST-->
       <!--Set the encytype to "multipart/form-data" in order to send files and not just text-->
-      <form action="/upload" method="POST" enctype="multipart/form-data">
-        <div class="file-field input-field">
-          <div class="btn grey">
-            <input type="file" name="file" />
+      <form action="" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+        <div>
+          <label for="name">Name</label>
+
+          <div className="relative">
+            <input type="text" className="w-full rounded-lg border-gray-200 p-4
+            pe-12 text-sm shadow-sm" placeholder="Enter your name" value={name}
+            onChange=""> setName(e.target.value) />
           </div>
         </div>
-        <button class="btn" type="submit">Submit</button>
+
+        <div>
+          <label for="username">Username</label>
+
+          <div className="relative">
+            <input type="text" className="w-full rounded-lg border-gray-200 p-4
+            pe-12 text-sm shadow-sm" placeholder="Enter username"
+            value={username} onChange=""/>
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="profile_image"
+            className="block font-medium text-deepgray"
+          >
+            Upload image
+          </label>
+
+          <input
+            name="image"
+            className="w-full rounded-lg border-gray-200 p-3 text-sm"
+            placeholder="Image"
+            type="file"
+            accept="image/*"
+            id="image"
+            onChange="{handleImage}"
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <button
+            type="submit"
+            className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   </body>

@@ -1,24 +1,45 @@
+import { randomUUID } from "crypto";
+import { Request } from "express";
 import { existsSync, mkdirSync } from "fs";
-import multer from "multer"
+import multer, { FileFilterCallback } from "multer"
 import { resolve } from "path";
 
-
 const path = resolve(__dirname, ".", "public", "images");
-const port = process.env.PORT || 3333;
 
-// Verifica se o diretório existe; se não, cria o diretório
+if (!existsSync(path)) {
+  mkdirSync(path, { recursive: true });
+}
 if (!existsSync(path)) {
   mkdirSync(path, { recursive: true });
 }
 
-export default multer({
-  storage: multer.diskStorage({}),
-  fileFilter: (req: any, file, cb) => {
-    let ext = path.toLowerCase();
-    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== 
-".png" && ext !== ".PNG") {
-      req.fileValidationError = "Forbidden extension";
-    }
-    cb(null, true);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${new Date() + randomUUID()}`);
   },
 });
+
+const upload = multer({
+  storage: storage,
+  fileFilter(
+    req: Request,
+    file: Express.Multer.File,
+    cb: FileFilterCallback
+  ) {
+    if (
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+});
+
+
+export default upload;
