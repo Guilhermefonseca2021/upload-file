@@ -8,16 +8,17 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({
- extended: true,
- })
-);
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+); 
 
-app.use(userRoutes)
+app.use(userRoutes);
 
-connectDB().then(() => console.log(`connected to db: `))
-
-app.listen(process.env.PORT || 3333, () => {
-  console.log(`Server is Fire at http://localhost:${process.env.port}`);
-  app.use(express.static("public"));
+connectDB().then(() => { 
+  app.listen(process.env.PORT || 3333, () => {
+    console.log(`Server is Fire at http://localhost:${process.env.port}`);
+    app.use(express.static("public"));
+  });
 });

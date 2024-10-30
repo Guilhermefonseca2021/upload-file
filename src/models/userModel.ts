@@ -1,26 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 
 const postSchema = new Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        }, 
-        username: {
-            type: String,
-            required: true,
-        },
-        image:{
-            publicId:{
-                type: String,
-                required: true,
-            },
-            url: {
-                type: String,
-                required: true,
-            }
-        }
-    }, {timestamps: true}
+  {
+    name: {
+      type: String,
+    },
+    username: {
+      type: String,
+    },
+    image: {
+      publicId: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+  },
+  { timestamps: true }
 );
 const User = mongoose.model("User", postSchema);
 export default User;

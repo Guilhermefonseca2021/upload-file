@@ -1,12 +1,21 @@
 import express from "express";
-const userRoutes = express.Router();
+import path from "path";
 import upload from "./middleware/multer";
+import { createUser } from "./controllers/userController";
 
-userRoutes.post("/", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.sendFile("../index.html", { root: __dirname });
-  res.status(200).json({ status: "success", message: "Upload successful!" });
+const userRoutes = express.Router();
+
+// Rota GET para servir o `index.html`
+userRoutes.get("/", (req, res) => {
+  const indexPath = path.join(__dirname, "..", "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error("Erro ao enviar o arquivo:", err);
+      res.status(500).send("Erro ao carregar o arquivo");
+    }
+  });
 });
 
-export default userRoutes;
+userRoutes.post('/upload', upload.single('image'), createUser);
 
+export default userRoutes;
